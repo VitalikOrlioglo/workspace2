@@ -14,7 +14,7 @@
         <columns>
           <TableColumn fx:id="matrikelCol" prefWidth="114.0" text="Matrikelnummer" />
           <TableColumn fx:id="vornameCol" prefWidth="111.0" text="Vorname" />
-            <TableColumn fx:id="nachnameCol" prefWidth="112.0" text="Nachname" onEditCancel="#onCancel" onEditStart="#onStart" onEditCommit="#onCommit"/>
+            <TableColumn fx:id="nachnameCol" onEditCancel="#onCancel" onEditCommit="#onCommit" onEditStart="#onStart" prefWidth="112.0" text="Nachname" />
             <TableColumn fx:id="gebCol" prefWidth="115.0" text="Geburtsdatum" />
             <TableColumn fx:id="bildCol" prefWidth="147.0" text="Bild" />
         </columns>
@@ -30,6 +30,7 @@
             <TextField fx:id="vornameTF" promptText="Vorname" />
             <TextField fx:id="nachnameTF" promptText="Nachname" />
             <DatePicker fx:id="gebTF" promptText="Geburtsdatum" />
+            <Button mnemonicParsing="false" onAction="#bildOpen" prefHeight="25.0" prefWidth="97.0" text="Choose File" />
           <Button mnemonicParsing="false" onAction="#saveAction" text="Save" />
         </items>
       </ToolBar>

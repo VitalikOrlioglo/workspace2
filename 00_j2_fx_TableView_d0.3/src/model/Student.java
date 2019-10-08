@@ -3,31 +3,36 @@ package model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Student implements Serializable {
+public class Student  implements Serializable {
+	
+	
+	
 	/**
 	 * 
 	 */
-//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	private String matrikelnummer;
 	private String vorname;
 	private String nachname;
 	private LocalDate geburtsdatum;
-	private String bild = "kein Bild";
-//	private transient String bild; // transient -> wird nicht serialisiert
+	private String bild="";  
+	//private transient String bild;  //  transient -> wird nicht serialisiert 
 	
-	public Student() {}
-	public Student(String matrikelnummer, String vorname, String nachname, LocalDate geburtsdatum, String bild) {
-		this.matrikelnummer = matrikelnummer;
-		this.vorname = vorname;
-		this.nachname = nachname;
-		this.geburtsdatum = geburtsdatum;
-		this.bild = bild;
+	public Student() {
+		
 	}
 	public Student(String matrikelnummer, String vorname, String nachname, LocalDate geburtsdatum) {
 		this.matrikelnummer = matrikelnummer;
 		this.vorname = vorname;
 		this.nachname = nachname;
 		this.geburtsdatum = geburtsdatum;
+	}
+	public Student(String matrikelnummer, String vorname, String nachname, LocalDate geburtsdatum, String bild) {
+		this.matrikelnummer = matrikelnummer;
+		this.vorname = vorname;
+		this.nachname = nachname;
+		this.geburtsdatum = geburtsdatum;
+		this.bild = bild;
 	}
 	public String getMatrikelnummer() {
 		return matrikelnummer;
@@ -87,6 +92,4 @@ public class Student implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 }
