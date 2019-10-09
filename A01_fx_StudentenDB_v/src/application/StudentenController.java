@@ -4,33 +4,28 @@ import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDate;
 
+import dao.StudentDAO;
+import dao.StudentMYSQLDAOImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import model.Student;
-import javafx.scene.control.Button;
 
-/**
- * Aufgabe: TableView bekommt Bilder (wenn keins angegeben wird Default-Bild)
- * 
- * cimadata Java 2
- * 
- * @author micha schirmer 08.10.2019 00_j2_fx_TableView_d0.2
- *
- */
-public class SampleController {
+public class StudentenController {
+//	private StudentDAO dao;
 	private static final String DEFAULT_IMG = "/img/default_user.png";// von Packages-Root-> getResorces...
 
 	@FXML
@@ -66,30 +61,23 @@ public class SampleController {
 	private String currentImage = "";
 
 	@FXML Button selectImageBTN;
-
 	
-	/**
-	 * studentTabelView - view
-	 * getItems() - ist ein List, namlich ObservableList, und getItems().add(new Student(matrikelnummerTF.getText(), vornameTF.getText(),
-				nachnameTF.getText(), gebTF.getValue(), currentImage)) ist model daten
-	 * @param event
-	 */
+	private StudentMYSQLDAOImpl studentMysql = new StudentMYSQLDAOImpl();
+	
 	@FXML
 	void saveAction(ActionEvent event) {
 		studentTabelView.getItems().add(new Student(matrikelnummerTF.getText(), vornameTF.getText(),
 				nachnameTF.getText(), gebTF.getValue(), currentImage));
 		studentTabelView.getItems().get(0);
 	}
-
+	
 	@FXML
 	void initialize() {
 		studentTabelView.getItems().add(new Student("INF1234", "Max", "Meier", LocalDate.now()));
 		initTable();
-
-		// FileChooser, nur Bilder?
-
+		
 	}
-
+	
 	private void initTable() {
 		matrikelCol.setCellValueFactory(new PropertyValueFactory<>("matrikelnummer"));// getMatrikelnummer()
 		vornameCol.setCellValueFactory(new PropertyValueFactory<>("vorname"));//
@@ -102,25 +90,9 @@ public class SampleController {
 
 		bildCol.setCellFactory(e -> new MyImageCell());
 
-//		bildCol.setCellFactory(new Callback<TableColumn<Student,String>, TableCell<Student,String>>() {
-//			
-//			@Override
-//			public TableCell<Student, String> call(TableColumn<Student, String> param) {
-//				// TODO Auto-generated method stub
-//				return new TableCell<Student, String>(){
-//					
-//					@Override
-//					protected void updateItem(String item, boolean empty) {
-//						// TODO Auto-generated method stub
-//						super.updateItem(item, empty);
-//					}
-//				};
-//			}
-//		});
-
 		initTableContextMenu();
 	}
-
+	
 	private void initTableContextMenu() {
 		ContextMenu cm = new ContextMenu();
 		MenuItem deleteItem = new MenuItem("Delete");
@@ -131,7 +103,7 @@ public class SampleController {
 		cm.getItems().add(deleteItem);
 		studentTabelView.setContextMenu(cm);
 	}
-
+	
 	@FXML
 	public void onCancel() {
 		System.out.println("onCancel");
@@ -150,7 +122,7 @@ public class SampleController {
 		Student s = e.getRowValue();
 		System.out.println("onCommit: " + s);
 	}
-
+	
 	class MyImageCell extends TableCell<Student, String> {
 
 		@Override
@@ -179,7 +151,7 @@ public class SampleController {
 
 		}
 	}
-
+	
 	@FXML
 	public void onSelectImage(ActionEvent event) {
 		FileChooser fc = new FileChooser();
