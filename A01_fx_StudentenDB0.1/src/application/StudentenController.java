@@ -5,9 +5,6 @@ import java.io.InputStream;
 import java.time.LocalDate;
 
 import dao.StudentDAO;
-import dao.StudentDummyDAOImpl;
-import dao.StudentMYSQLDAOImpl;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,7 +24,9 @@ import javafx.stage.FileChooser;
 import model.Student;
 
 public class StudentenController {
+	
 	private StudentDAO dao;
+	
 	private static final String DEFAULT_IMG = "/img/default_user.png";// von Packages-Root-> getResorces...
 
 	@FXML
@@ -62,27 +61,27 @@ public class StudentenController {
 
 	private String currentImage = "";
 
-	@FXML Button selectImageBTN;
-	
+	@FXML 
+	private Button selectImageBTN;
+
 	@FXML
 	void saveAction(ActionEvent event) {
+		
+		//ObservableList<Student> li = FXCollections.observableArrayList();
 		studentTabelView.getItems().add(new Student(matrikelnummerTF.getText(), vornameTF.getText(),
 				nachnameTF.getText(), gebTF.getValue(), currentImage));
-		studentTabelView.getItems().get(0);
-	}
 	
+	}
+
 	@FXML
 	void initialize() {
-//		dao = new StudentDummyDAOImpl();
-		dao = new StudentMYSQLDAOImpl();
-		
-//		studentTabelView.getItems().add(new Student("INF1234", "Max", "Meier", LocalDate.now()));
-		studentTabelView.getItems().addAll(dao.findAll());
-//		studentTabelView.setItems(FXCollections.observableArrayList(dao.findAll())); // oder so statt getItems().addAll
+		studentTabelView.getItems().add(new Student("INF1234", "Max", "Meier", LocalDate.now()));
 		initTable();
-		
+
+		// FileChooser, nur Bilder?
+
 	}
-	
+
 	private void initTable() {
 		matrikelCol.setCellValueFactory(new PropertyValueFactory<>("matrikelnummer"));// getMatrikelnummer()
 		vornameCol.setCellValueFactory(new PropertyValueFactory<>("vorname"));//
@@ -95,23 +94,36 @@ public class StudentenController {
 
 		bildCol.setCellFactory(e -> new MyImageCell());
 
+//		bildCol.setCellFactory(new Callback<TableColumn<Student,String>, TableCell<Student,String>>() {
+//			
+//			@Override
+//			public TableCell<Student, String> call(TableColumn<Student, String> param) {
+//				// TODO Auto-generated method stub
+//				return new TableCell<Student, String>(){
+//					
+//					@Override
+//					protected void updateItem(String item, boolean empty) {
+//						// TODO Auto-generated method stub
+//						super.updateItem(item, empty);
+//					}
+//				};
+//			}
+//		});
+
 		initTableContextMenu();
 	}
-	
+
 	private void initTableContextMenu() {
-		dao = new StudentMYSQLDAOImpl();
 		ContextMenu cm = new ContextMenu();
 		MenuItem deleteItem = new MenuItem("Delete");
 		deleteItem.setOnAction(e -> {
-//			dao.deleteStudent(studentTabelView.)
 			Student s = studentTabelView.getSelectionModel().getSelectedItem();// .getSelectedItems()
-			dao.deleteStudent(s.getId());
 			studentTabelView.getItems().remove(s);
 		});
 		cm.getItems().add(deleteItem);
 		studentTabelView.setContextMenu(cm);
 	}
-	
+
 	@FXML
 	public void onCancel() {
 		System.out.println("onCancel");
@@ -130,7 +142,7 @@ public class StudentenController {
 		Student s = e.getRowValue();
 		System.out.println("onCommit: " + s);
 	}
-	
+
 	class MyImageCell extends TableCell<Student, String> {
 
 		@Override
@@ -159,7 +171,7 @@ public class StudentenController {
 
 		}
 	}
-	
+
 	@FXML
 	public void onSelectImage(ActionEvent event) {
 		FileChooser fc = new FileChooser();

@@ -15,30 +15,13 @@ public class Student  implements Serializable {
 	private String matrikelnummer;
 	private String vorname;
 	private String nachname;
-	private LocalDate geburtsdatum; // sql.Date, String, ?
-	private String bild="";  // nur Pfad Speichern oder nur Name
+	private LocalDate geburtsdatum;  //sq.Date, String, ?
+	private String bild="";  // nur Pfad Speichern/ oder nur Name
 	//private transient String bild;  //  transient -> wird nicht serialisiert 
 	
 	public Student() {
 		
 	}
-	
-	public Student(int id, String matrikelnummer, String vorname, String nachname, LocalDate geburtsdatum,
-			String bild) {
-		this.id = id;
-		this.matrikelnummer = matrikelnummer;
-		this.vorname = vorname;
-		this.nachname = nachname;
-		this.geburtsdatum = geburtsdatum;
-		this.bild = bild;
-	}
-
-	public Student(String matrikelnummer, String vorname, String nachname) {
-		this.matrikelnummer = matrikelnummer;
-		this.vorname = vorname;
-		this.nachname = nachname;
-	}
-
 	public Student(String matrikelnummer, String vorname, String nachname, LocalDate geburtsdatum) {
 		this.matrikelnummer = matrikelnummer;
 		this.vorname = vorname;
@@ -82,12 +65,6 @@ public class Student  implements Serializable {
 	public void setBild(String bild) {
 		this.bild = bild;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	@Override
 	public String toString() {
 		return "Student [matrikelnummer=" + matrikelnummer + ", vorname=" + vorname + ", nachname=" + nachname
@@ -115,5 +92,11 @@ public class Student  implements Serializable {
 		} else if (!matrikelnummer.equals(other.matrikelnummer))
 			return false;
 		return true;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

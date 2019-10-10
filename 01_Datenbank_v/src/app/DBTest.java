@@ -31,6 +31,7 @@ public class DBTest {
 			PreparedStatement deletePreparedStatement = con.prepareStatement("DELETE FROM designpattern WHERE name=?"); // WHERE name=?, beschreibung=? -> parametrisierte queries
 			deletePreparedStatement.setString(1, "Factory Method"); // 1 == erste Fragezeichen
 			deletePreparedStatement.executeUpdate();
+//			deletePreparedStatement.execute(); // nicht zu empfehlen
 			System.out.println("updateCount delete: " + deletePreparedStatement.getUpdateCount());
 			schow(con);
 			deletePreparedStatement.close();

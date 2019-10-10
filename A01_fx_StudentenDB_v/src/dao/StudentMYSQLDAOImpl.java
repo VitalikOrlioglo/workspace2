@@ -1,5 +1,7 @@
 package dao;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,32 +17,40 @@ public class StudentMYSQLDAOImpl implements StudentDAO {
 
 	@Override
 	public List<Student> findAll() {
-		List<Student> personList = new ArrayList<>();
+		ArrayList<Student> list = new ArrayList<>();
 		try {
-			Statement selectStatement = dbconnect.getCon().createStatement();
-			ResultSet rs = selectStatement.executeQuery("SELECT * FROM student");
+			PreparedStatement selectStatement = dbconnect.getCon().prepareStatement("SELECT * FROM student");
+			ResultSet rs = selectStatement.executeQuery();
 			while (rs.next()) {
-//				int id = rs.getInt("id");
+				int id = rs.getInt("id");
 				String matrikelnummer = rs.getString("matrikelnummer");
-                String vorname = rs.getString("vorname");
-                String nachname = rs.getString("nachname");
-                Student student = new Student(matrikelnummer, vorname, nachname);
-                personList.add(student);
+				String vorname = rs.getString("vorname");
+				String nachname = rs.getString("nachname");
+				Date geburtsdatum = rs.getDate("geburtsdatum");
+				String bild = rs.getString("bild");
 				
-				System.out.printf("%s - %s - %s\n", matrikelnummer, vorname, nachname);
+				list.add(new Student(id, matrikelnummer, vorname, nachname, geburtsdatum.toLocalDate(), bild));
 			}
-			System.out.println("************************************************************");
-			selectStatement.close();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return personList;
+		return list;
 	}
 
 	@Override
 	public boolean deleteStudent(int id) {
-		return false;
+		PreparedStatement deletePreparedStatement;
+		try {
+			deletePreparedStatement = dbconnect.getCon().prepareStatement("DELETE FROM student WHERE id=?");
+			deletePreparedStatement.setInt(1, id);
+			deletePreparedStatement.executeUpdate();
+			System.out.println("updateCount delete: " + deletePreparedStatement.getUpdateCount());
+			deletePreparedStatement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
