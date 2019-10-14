@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <child1>
+    <child1a />
+  </child1>
+  <child2 id="42">ein Textelement</child2>
+</root>

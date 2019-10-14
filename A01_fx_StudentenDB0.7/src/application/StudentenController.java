@@ -1,10 +1,18 @@
 package application;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import dao.StudentDAO;
 import dao.StudentDummyDAOImpl;
@@ -13,6 +21,7 @@ import db.DBConnectException;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -35,7 +44,9 @@ import javafx.util.Duration;
 import model.Student;
 import util.Config;
 import util.FileUtils;
+import xml.XMLExporter;
 import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 
 enum Test {
 	A, B, C
@@ -83,6 +94,12 @@ public class StudentenController {
 	private Button selectImageBTN;
 
 	@FXML Label infoLabel;
+	
+	@FXML TextField searchTF;
+
+	@FXML ComboBox<String> searchComboBox;
+	
+	private ObservableList<String> comboboxList = FXCollections.observableArrayList("matrikelnummer", "vorname", "nachname"); // TODO -> Properties
 
 	@FXML
 	void saveAction(ActionEvent event) {
@@ -101,6 +118,7 @@ public class StudentenController {
 	@FXML
 	void initialize() {
 		try {
+			searchComboBox.setItems(comboboxList);
 			FileUtils.createUserDir();//
 			//dao = new StudentDummyDAOImpl();
 			dao = new StudentMySQLDAOImpl();
@@ -246,5 +264,19 @@ public class StudentenController {
 //			FileUtils.copyToUserImages(f);// >> FIXME -> zu save 
 
 		}
+	}
+
+	@FXML public void searchAction() {
+		System.out.println(searchTF.getText());
+		String selectedItem = searchComboBox.getSelectionModel().getSelectedItem();
+		studentTabelView.getItems().setAll(dao.findByField(selectedItem, searchTF.getText()));
+	}
+
+	@FXML public void refreshAction() {
+		studentTabelView.setItems(FXCollections.observableArrayList(dao.findAll()));
+	}
+
+	@FXML public void exportXMLAction(ActionEvent event) {
+		XMLExporter.export(studentTabelView.getItems()); // im Paket xml
 	}
 }

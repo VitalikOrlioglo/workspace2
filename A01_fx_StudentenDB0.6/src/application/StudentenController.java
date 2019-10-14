@@ -13,6 +13,7 @@ import db.DBConnectException;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -36,6 +37,7 @@ import model.Student;
 import util.Config;
 import util.FileUtils;
 import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 
 enum Test {
 	A, B, C
@@ -83,6 +85,12 @@ public class StudentenController {
 	private Button selectImageBTN;
 
 	@FXML Label infoLabel;
+	
+	@FXML TextField searchTF;
+
+	@FXML ComboBox<String> searchComboBox;
+	
+	private ObservableList<String> comboboxList = FXCollections.observableArrayList("matrikelnummer", "vorname", "nachname"); // TODO -> Properties
 
 	@FXML
 	void saveAction(ActionEvent event) {
@@ -101,6 +109,7 @@ public class StudentenController {
 	@FXML
 	void initialize() {
 		try {
+			searchComboBox.setItems(comboboxList);
 			FileUtils.createUserDir();//
 			//dao = new StudentDummyDAOImpl();
 			dao = new StudentMySQLDAOImpl();
@@ -246,5 +255,15 @@ public class StudentenController {
 //			FileUtils.copyToUserImages(f);// >> FIXME -> zu save 
 
 		}
+	}
+
+	@FXML public void searchAction() {
+		System.out.println(searchTF.getText());
+		String selectedItem = searchComboBox.getSelectionModel().getSelectedItem();
+		studentTabelView.getItems().setAll(dao.findByField(selectedItem, searchTF.getText()));
+	}
+
+	@FXML public void refreshAction(ActionEvent event) {
+		studentTabelView.setItems(FXCollections.observableArrayList(dao.findAll()));
 	}
 }
