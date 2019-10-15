@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studenten>
+  <student id="11">
+    <matrikelnummer>sxb</matrikelnummer>
+    <vorname>xc</vorname>
+    <nachname>xcv</nachname>
+    <geburtsdatum>22.10.19</geburtsdatum>
+    <bild />
+  </student>
+  <student id="12">
+    <matrikelnummer>edfgdfg</matrikelnummer>
+    <vorname>dfgdfg</vorname>
+    <nachname>dfgdfg</nachname>
+    <geburtsdatum>22.10.19</geburtsdatum>
+    <bild>3_depths_of_solitude_by_headvoid.jpg</bild>
+  </student>
+  <student id="13">
+    <matrikelnummer>dfgbdgdfgd</matrikelnummer>
+    <vorname>dfgdfg</vorname>
+    <nachname>dfgdfg</nachname>
+    <geburtsdatum>22.10.19</geburtsdatum>
+    <bild>3_depths_of_solitude_by_headvoid.jpg</bild>
+  </student>
+  <student id="18">
+    <matrikelnummer>dfbdfb</matrikelnummer>
+    <vorname>dfbdbf</vorname>
+    <nachname>dbfdbfd</nachname>
+    <geburtsdatum>01.10.19</geburtsdatum>
+    <bild />
+  </student>
+  <student id="19">
+    <matrikelnummer>M1</matrikelnummer>
+    <vorname>accascasc</vorname>
+    <nachname>ascascasc</nachname>
+    <geburtsdatum>30.09.19</geburtsdatum>
+    <bild />
+  </student>
+  <student id="20">
+    <matrikelnummer>M2</matrikelnummer>
+    <vorname>acsacsasca</vorname>
+    <nachname>avdsdvs</nachname>
+    <geburtsdatum>07.10.19</geburtsdatum>
+    <bild />
+  </student>
+  <student id="21">
+    <matrikelnummer>M3</matrikelnummer>
+    <vorname>accsasas</vorname>
+    <nachname>aaaaaaaaaaa</nachname>
+    <geburtsdatum>06.10.19</geburtsdatum>
+    <bild />
+  </student>
+  <student id="22">
+    <matrikelnummer>M4</matrikelnummer>
+    <vorname>acsascascasc</vorname>
+    <nachname>ascasc</nachname>
+    <geburtsdatum>03.10.19</geburtsdatum>
+    <bild />
+  </student>
+</studenten>

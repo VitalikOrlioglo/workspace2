@@ -30,12 +30,12 @@ public class XMLExporter {
 	private static final String STUDENTEN_XML = "Studenten.xml";
 
 	public static void export(List<Student> observableList) {
-		Element rootElement = new Element("studenten");
+		Element rootElement = new Element("studenten"); // <studenten>
 		Document doc = new Document(rootElement);
 		
 		for (Student student : observableList) {
 			Element studentElement = new Element("student");
-			studentElement.setAttribute("id", student.getId()+"");
+			studentElement.setAttribute("id", student.getId()+""); // <student id="1">
 			
 			rootElement.addContent(studentElement);
 		}

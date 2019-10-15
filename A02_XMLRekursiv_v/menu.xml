@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menubar>
+	<menu id="1" name="File">
+		<menuitem>New</menuitem>
+		<menuitem>Open</menuitem>
+	</menu>
+	<menu name="Edit">
+		<menuitem>
+			<name>Copy</name>
+			<icon>copy.png</icon>
+		</menuitem>
+		<menuitem>
+			<name>Paste</name>
+			<icon>paste.png</icon>
+		</menuitem>
+	</menu>
+</menubar>
