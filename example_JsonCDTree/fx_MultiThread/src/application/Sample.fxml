@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+   <children>
+      <ProgressBar fx:id="pg1" layoutX="52.0" layoutY="67.0" prefHeight="25.0" prefWidth="564.0" progress="0.0" />
+      <ProgressBar fx:id="pg2" layoutX="52.0" layoutY="101.0" prefHeight="25.0" prefWidth="564.0" progress="0.0" />
+      <ProgressBar fx:id="pg3" layoutX="52.0" layoutY="136.0" prefHeight="25.0" prefWidth="564.0" progress="0.0" />
+      <ProgressBar fx:id="pg4" layoutX="52.0" layoutY="170.0" prefHeight="25.0" prefWidth="564.0" progress="0.0" />
+      <ProgressBar fx:id="pg5" layoutX="52.0" layoutY="204.0" prefHeight="25.0" prefWidth="564.0" progress="0.0" />
+      <ProgressBar fx:id="pg8" layoutX="52.0" layoutY="307.0" prefHeight="25.0" prefWidth="564.0" progress="0.0" />
+      <ProgressBar fx:id="pg6" layoutX="52.0" layoutY="239.0" prefHeight="25.0" prefWidth="564.0" progress="0.0" />
+      <ProgressBar fx:id="pg7" layoutX="52.0" layoutY="273.0" prefHeight="25.0" prefWidth="564.0" progress="0.0" />
+      <HBox layoutX="27.0" layoutY="346.0" prefHeight="43.0" prefWidth="617.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#startAll" text="Start All" />
+            <Button mnemonicParsing="false" onAction="#stopAll" text="Stop" />
+           
+            <Button mnemonicParsing="false" onAction="#reset" text="Reset" />
+         </children>
+      </HBox>
+      <Label fx:id="labelT1" layoutX="644.0" layoutY="71.0" prefHeight="17.0" prefWidth="72.0" />
+      <Label fx:id="labelT2" layoutX="644.0" layoutY="105.0" prefHeight="17.0" prefWidth="72.0" />
+      <Label fx:id="labelT3" layoutX="644.0" layoutY="140.0" prefHeight="17.0" prefWidth="72.0" />
+      <Label fx:id="labelT4" layoutX="644.0" layoutY="174.0" prefHeight="17.0" prefWidth="72.0" />
+      <Label fx:id="labelT5" layoutX="644.0" layoutY="208.0" prefHeight="17.0" prefWidth="72.0" />
+      <Label fx:id="labelT6" layoutX="644.0" layoutY="243.0" prefHeight="17.0" prefWidth="72.0" />
+      <Label fx:id="labelT7" layoutX="644.0" layoutY="277.0" prefHeight="17.0" prefWidth="72.0" />
+      <Label fx:id="labelT8" layoutX="644.0" layoutY="311.0" prefHeight="17.0" prefWidth="72.0" />
+   </children>
+</AnchorPane>

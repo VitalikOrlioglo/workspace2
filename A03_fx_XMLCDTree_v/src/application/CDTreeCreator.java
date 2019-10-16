@@ -14,19 +14,21 @@ import javafx.scene.control.TreeItem;
 
 public class CDTreeCreator {
 
-	public static TreeItem<String> createTree(String string) {
+	public static TreeItem<String> createTree(String documentPath) {
 		TreeItem<String> rootItem = new TreeItem<>();
 		try {
 			SAXBuilder builder = new SAXBuilder();
-			Document doc = builder.build(new File("cd-catalog.xml"));
+			Document doc = builder.build(new File(documentPath));
 			Element rootelement = doc.getRootElement();
 			rootItem.setValue(rootelement.getName());
+			System.out.println(rootItem); // CATALOG
 			
 			List<Element> cdElemente = rootelement.getChildren(); // <CD>...
 			for (Element cdElement : cdElemente) {
 				TreeItem<String> cdItem = new TreeItem<>();
 //				System.out.println(cdElement.getName());
 				cdItem.setValue(cdElement.getChildText("TITLE")); // Textelement vom Child-Element
+//				cdItem.setValue(cdElement.getChildren().get(0).getTextTrim()); // Textelement vom Child-Element
 				
 				List<Element> cdDataElemente = cdElement.getChildren(); // TITLE, ARTIST, ...
 				for (Element cdDataElement : cdDataElemente) {
@@ -35,6 +37,7 @@ public class CDTreeCreator {
 					cdItem.getChildren().add(cdDataItem);
 				}
 				rootItem.getChildren().add(cdItem);
+				cdItem.setExpanded(true);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
