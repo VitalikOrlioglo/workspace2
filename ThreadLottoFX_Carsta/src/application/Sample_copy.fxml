@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+   <top>
+      <AnchorPane prefHeight="150.0" style="-fx-background-color: LIGHTGRAY;" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar fx:id="oben" layoutX="135.0" layoutY="55.0" prefHeight="150.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <items>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="69.0" prefWidth="94.0" scaleShape="false" styleClass="kugel" text="bla" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Label>
+               </items>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </ToolBar>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane fx:id="mitte" prefHeight="451.0" prefWidth="800.0" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button mnemonicParsing="false" onAction="#add" text="Add" />
+        </items>
+      </ToolBar>
+   </bottom>
+</BorderPane>
