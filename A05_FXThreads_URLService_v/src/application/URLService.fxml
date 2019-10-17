@@ -13,7 +13,7 @@
       <AnchorPane prefHeight="593.0" prefWidth="805.0" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="textFieldId" prefHeight="31.0" prefWidth="469.0" promptText="Adresse eingeben" />
-            <Button layoutX="469.0" mnemonicParsing="false" onAction="#startButton" prefHeight="31.0" prefWidth="157.0" text="Start" />
+            <Button layoutX="469.0" mnemonicParsing="false" onAction="#startButton" prefHeight="31.0" prefWidth="157.0" text="Search" />
             <TabPane layoutY="43.0" prefHeight="550.0" prefWidth="805.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
               <tabs>
                 <Tab text="Source Code">

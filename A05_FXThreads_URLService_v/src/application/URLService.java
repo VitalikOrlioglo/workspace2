@@ -16,11 +16,14 @@ public class URLService{
 	@FXML TextArea textAreaId;
 
 
-	@FXML public void startButton(ActionEvent event) {}
-//	@FXML
-    WebView buildWebView() {
+	@FXML public void startButton(ActionEvent event) {
 		WebView webView = new WebView();
-	    webView.getEngine().load("http://google.com");
-	    return webView;
+		webView.getEngine().load("http://google.com");
+	}
+//	@FXML
+    void buildWebView() {
+//		WebView webView = new WebView();
+//	    webView.getEngine().load("http://google.com");
+////	    return webView;
     }	
 }
