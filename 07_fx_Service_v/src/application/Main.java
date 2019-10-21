@@ -35,6 +35,12 @@ public class Main extends Application {
 				myService.restart(); // start;
 			});
 			
+			/*
+			 * 3 variante Wert of variable zu bekommen
+			 * - setOnSucceeded
+			 * ValueProperty Listener
+			 * ValueProperty Binding
+			 */
 			myService.setOnSucceeded(e->{
 				System.out.println("Service ende");
 			});

@@ -9,10 +9,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import service.ExctractURLService;
 import service.URLService;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 public class URLServicesController {
 
@@ -31,6 +34,10 @@ public class URLServicesController {
 
 	@FXML 
 	private Label infoLabel;
+	@FXML
+	private WebView webView;
+	@FXML
+	private ProgressBar progressBar;
 
     @FXML
     void onSearchAction(ActionEvent event) {
@@ -41,6 +48,10 @@ public class URLServicesController {
     @FXML
     void initialize() {
     	System.out.println("init...");
+    	WebEngine webEngine = webView.getEngine();
+    	
+    	progressBar.progressProperty().bind(webEngine.getLoadWorker().progressProperty());
+    	
     	urlservice = new URLService();
     	extractURLService = new ExctractURLService();
     	infoLabel.textProperty().bind(urlservice.messageProperty());
@@ -62,6 +73,8 @@ public class URLServicesController {
     	urlservice.setOnSucceeded( e->{
     		extractURLService.setHtmlSourceCode(urlservice.getValue());// oder von TextArea.getText()
     		extractURLService.restart();
+    		// WebView
+    		webEngine.load(searchTextField.getText());
     	} );
     	
     	extractURLService.valueProperty().addListener( (a,b,newValue)->{

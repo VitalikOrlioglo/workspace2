@@ -42,7 +42,7 @@ public class ExctractURLService extends Service<List<String>> {
 	public List<String> extractUrls(String value) {
 		List<String> result = new ArrayList<String>();
 		String urlPattern = URL_PATTERN;
-		Pattern p = Pattern.compile(urlPattern, Pattern.CASE_INSENSITIVE );
+		Pattern p = Pattern.compile(urlPattern, Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(value);
 		while (m.find()) {
 			result.add(m.group());

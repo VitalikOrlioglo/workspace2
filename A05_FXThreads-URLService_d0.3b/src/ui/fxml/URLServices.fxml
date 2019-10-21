@@ -20,7 +20,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextArea fx:id="sourceTextArea" layoutX="209.0" layoutY="38.0" prefHeight="503.0" prefWidth="648.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextArea fx:id="sourceTextArea" layoutX="209.0" layoutY="38.0" prefHeight="503.0" prefWidth="648.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -38,7 +38,7 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-            <TextField fx:id="searchTextField" onAction="#onSearchAction" prefHeight="25.0" prefWidth="575.0" text="http://www.java2s.com" />
+            <TextField  text="http://www.java2s.com" fx:id="searchTextField" onAction="#onSearchAction" prefHeight="25.0" prefWidth="575.0" />
           <Button mnemonicParsing="false" onAction="#onSearchAction" text="Button" />
         </items>
       </ToolBar>
