@@ -1,5 +1,5 @@
 e.getTableColumn().getText()e.getTableColumn().getText()
-#  StudentenDB 0.5
+#  StudentenDB 0.7
 
 
 *  
@@ -14,6 +14,7 @@ e.getTableColumn().getText()e.getTableColumn().getText()
 *  refresh
 *  XML schreiben
 *  Resource Bundle -> Lable, Beschriftungen -> International -> Main, DBConnect
+* Logging
 
 
 

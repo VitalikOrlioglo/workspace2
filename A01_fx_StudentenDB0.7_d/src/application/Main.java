@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import db.DBConnect;
 import db.DBConnectException;
 import javafx.application.Application;
@@ -15,6 +18,8 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
+	
+	private static Logger log = LogManager.getRootLogger();
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -50,6 +55,8 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		log.info("App start  . . .");
 		launch(args);
+		log.info("App end  . . .");
 	}
 }

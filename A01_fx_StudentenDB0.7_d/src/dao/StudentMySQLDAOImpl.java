@@ -7,11 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import db.DBConnect;
 import db.DBConnectException;
 import model.Student;
 
 public class StudentMySQLDAOImpl implements StudentDAO {
+	private static Logger log = LogManager.getLogger();
 	private DBConnect dbconnect ;
 	
 	
@@ -28,25 +32,30 @@ public class StudentMySQLDAOImpl implements StudentDAO {
 			list = createResultList( rs);
 
 		} catch (SQLException e) {
-			e.printStackTrace();//log
+//			e.printStackTrace();//log
+			log.error(e);
 		}
 		return list;
 	}
 
 	@Override
 	public boolean deleteStudent(int id) {
+		log.debug(id);
 		try {
 			PreparedStatement deleteStatement = dbconnect.getCon().prepareStatement("DELETE FROM student WHERE id=?");
 			deleteStatement.setInt(1, id);
-			return deleteStatement.executeUpdate() == 1;
+			boolean deleted = deleteStatement.executeUpdate() == 1;
+			log.info("geloscht {}", deleted);
+			return deleted;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("id: {}", id, e);
 		}
 		return false;
 	}
 
 	@Override
 	public boolean save(Student student) {
+		log.debug(student);
 		try {
 			PreparedStatement ps = dbconnect.getCon().prepareStatement(
 					"INSERT INTO student (matrikelnummer,vorname, nachname, geburtsdatum,bild)" + "VALUES (?,?,?,?,?)");

@@ -5,7 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import javafx.fxml.FXML;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * 
@@ -19,6 +20,7 @@ import javafx.fxml.FXML;
  *
  */
 public final class DBConnect {
+	private static Logger log = LogManager.getLogger();
 	
 	//private final String URL ="jdbc:mysql://localhost:3306/java2";
 	
@@ -28,13 +30,19 @@ public final class DBConnect {
 	private ResourceBundle res;
 	
 	private DBConnect() throws DBConnectException {
-		res = ResourceBundle.getBundle("properties.app");
+		
 		try {
+			res = ResourceBundle.getBundle("properties.app");
+			log.trace("load Properties {} ", res.getBaseBundleName());
 			con = DriverManager.getConnection(res.getString("url"),res.getString("user"),res.getString("pwd"));
+			log.info("Datenbank connected {}", con.getCatalog());
 		} catch (SQLException e) {
-			System.err.println("DB Fehler");//log
-			throw new DBConnectException();
+//			System.err.println("DB Fehler");//log
+//			throw new DBConnectException();
+			log.error("DB Fehler", e);
 			//e.printStackTrace();
+		} catch (Exception e) {
+			log.error("Fehler", e);
 		}
 	}
 	
