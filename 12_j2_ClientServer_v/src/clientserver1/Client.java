@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 public class Client {
 	
 	public Client() throws UnknownHostException, IOException {
-		Socket toServerSocket = new Socket("localhost", 1234);
+		Socket toServerSocket = new Socket("localhost", 1234); // client erzeugt socket object und server wartet socket object
 		InputStream in = toServerSocket.getInputStream();
 		OutputStream out = toServerSocket.getOutputStream();
 		out.write(3);

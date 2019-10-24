@@ -12,7 +12,7 @@ public class Server {
 		ServerSocket serverSocket = new ServerSocket(1234);
 		while (true) {
 			System.out.println("Server wartet . . .");
-			Socket toClientSocket = serverSocket.accept(); // Server wartet mit accept
+			Socket toClientSocket = serverSocket.accept(); // Server wartet mit accept, client erzeugt socket object und server wartet socket object
 			InputStream in = toClientSocket.getInputStream();
 			OutputStream out = toClientSocket.getOutputStream();
 			// Protokoll

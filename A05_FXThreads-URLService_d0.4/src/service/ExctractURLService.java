@@ -17,7 +17,6 @@ public class ExctractURLService extends Service<List<String>> {
 
 	@Override
 	protected Task<List<String>> createTask() {
-		// TODO Auto-generated method stub
 		return new Task<List<String>>() {
 
 			@Override
