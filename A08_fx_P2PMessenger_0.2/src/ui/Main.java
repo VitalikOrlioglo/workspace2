@@ -1,27 +1,27 @@
-package application;
+package ui;
 	
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 
-public class ClientMain extends Application {
-	private static Logger log = LogManager.getRootLogger();
+public class Main extends Application {
 	
+	private static Logger log = LogManager.getRootLogger();
 	@Override
 	public void start(Stage primaryStage) {
+		
 		try {
-			primaryStage.setAlwaysOnTop(true);
-			primaryStage.setTitle("Client");
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("TimeClient.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/ui/Messenger.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setAlwaysOnTop(true);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -29,7 +29,9 @@ public class ClientMain extends Application {
 	}
 	
 	public static void main(String[] args) {
-		log.info("Start App");
+		log.info("start");
 		launch(args);
+		
+		log.info("end");
 	}
 }

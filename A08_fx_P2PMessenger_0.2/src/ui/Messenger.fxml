@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane prefHeight="483.0" prefWidth="573.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="ui.MessengerController">
+	<top>
+		<ToolBar prefHeight="40.0" prefWidth="200.0"
+			BorderPane.alignment="CENTER">
+			<items>
+				<TextField text="127.0.0.2" fx:id="localServerTextField" promptText="IP Adresse (Local Server)" />
+				<Button mnemonicParsing="false" onAction="#serverStartAction"
+					text="Server Start" />
+				<TextField fx:id="nameTextField" promptText="Name" text="Max" />
+			</items>
+		</ToolBar>
+	</top>
+	<bottom>
+		<VBox prefHeight="75.0" prefWidth="573.0" BorderPane.alignment="CENTER">
+			<children>
+				<ToolBar prefHeight="40.0" prefWidth="200.0">
+					<items>
+						<TextField fx:id="messageTextField" prefHeight="31.0"
+							prefWidth="496.0" text="hallo"/>
+						<Button mnemonicParsing="false" onAction="#messageSendAction"
+							text="Send" />
+					</items>
+				</ToolBar>
+				<ToolBar prefHeight="40.0" prefWidth="200.0">
+					<items>
+						<TextField text="127.0.0.2" fx:id="toServerTextField" prefHeight="31.0"
+							prefWidth="177.0" promptText="IP Adresse (to Server)" />
+						<Button mnemonicParsing="false" onAction="#connectToServerAction"
+							text="Connect to Server" />
+					</items>
+				</ToolBar>
+			</children>
+		</VBox>
+	</bottom>
+	<center>
+		<TableView fx:id="messageTableView" prefHeight="200.0"
+			prefWidth="200.0" BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn prefWidth="90.0" text="Name">
+					<cellValueFactory>
+						<PropertyValueFactory property="name" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn prefWidth="350.0" text="Nachricht">
+					<cellValueFactory>
+						<PropertyValueFactory property="message" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn minWidth="0.0" prefWidth="130.0" text="Zeit">
+					<cellValueFactory>
+						<PropertyValueFactory property="time" />
+					</cellValueFactory>
+				</TableColumn>
+			</columns>
+		</TableView>
+	</center>
+</BorderPane>

@@ -19,7 +19,7 @@
 	<Loggers>
 		<Root level="debug"><!-- Log-Level -->
 			<AppenderRef ref="console" />
-			<AppenderRef ref="file" /> 
+<!-- 			<AppenderRef ref="file" />  -->
 		</Root>
 	</Loggers>
 </Configuration>

@@ -37,7 +37,7 @@ public class MessageService extends Service<String>{
 				//12.
 				String name = String.valueOf(in.readObject());
 				log.debug("Name vom Client {}", name);
-				String msg = name + "" + LocalTime.now();
+				String msg = name + ", Es ist schon" + LocalTime.now() + ", Geh zur Arbeit!";
 				log.debug("Message {} ", msg);
 				out.writeObject(msg);//13.
 				return msg;// wird eigentlich nicht benotigt TODO Server zeigt Message an

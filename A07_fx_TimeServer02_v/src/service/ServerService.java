@@ -6,6 +6,7 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
@@ -46,12 +47,19 @@ public class ServerService extends Service<String> {
 					
 					//8.
 					messageService.setupStreams(toClientSocket);
-					messageService.restart();
+					Platform.runLater(() -> {
+						messageService.restart();
+					} );
+					
+//					Platform.runLater(new Runnable() {
+//						@Override
+//						public void run() {
+//							messageService.restart();
+//						}
+//					});
 				}
-				
 				//return null;
 			}
 		};
 	}
-	
 }

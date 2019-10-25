@@ -10,15 +10,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 
 
-public class ClientMain extends Application {
+public class ServerMain extends Application {
 	private static Logger log = LogManager.getRootLogger();
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			primaryStage.setAlwaysOnTop(true);
-			primaryStage.setTitle("Client");
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("TimeClient.fxml"));
+			primaryStage.setTitle("Server");
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("TimeServer.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
