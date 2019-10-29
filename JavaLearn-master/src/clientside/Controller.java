@@ -1,6 +1,8 @@
 package clientside;
 
 import entries.EntryDic;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,7 +17,8 @@ import java.util.concurrent.Future;
 
 import static entries.EntryDic.*;
 
-public class Controller{
+public class Controller {
+	
 	
 	@FXML
 	public TextField txtsearchTXT;
