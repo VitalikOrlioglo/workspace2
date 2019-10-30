@@ -74,7 +74,7 @@ public class Controller {
     	log.info("Controller: searchWord is pressed, start searching");
     	String searchDefByWord = textSearch.getText();
     	log.info("Controller: looking for definition of word - " + searchDefByWord);
-    	DictionaryObject dictionaryObject = new DictionaryObject(word, definition, flag)
+    	DictionaryObject dictionaryObject = new DictionaryObject(word, definition, flag):
     }
     
     @FXML
