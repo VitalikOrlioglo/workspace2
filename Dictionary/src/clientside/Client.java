@@ -16,9 +16,9 @@ public class Client extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("DictionaryView.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/ui/DictionaryView.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/ui/application.css").toExternalForm());
 			primaryStage.setTitle("Dictionary");
 			primaryStage.setResizable(false);
 			primaryStage.setAlwaysOnTop(true);
