@@ -3,6 +3,7 @@ package serverside;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.Callable;
 
@@ -24,9 +25,8 @@ public class DBCallable implements Callable<DictionaryObject>{
 	PreparedStatement deleteStatement;
 	
 	/**
-	 * Конструктор. Присваивает переданный в параметрах<code>entryDic</code> статическому полю с таким же названием.
-	 * Создаёт лог файл, переменную отвечающую за логирование, загружает драйвер
-	 * базы с которой будет работать объект, соединение и создаёт предскомпилированные запросы для отправки команд базе.
+	 * Конструктор загружает драйвер базы с которой будет работать объект, соединение 
+	 * и создаёт предскомпилированные запросы для отправки команд базе.
 	 * 
 	 * @param dictionaryObject
 	 */
@@ -35,7 +35,6 @@ public class DBCallable implements Callable<DictionaryObject>{
 		log.info("DBCallable: Constructor starts");
 		try {
 			log.info("DBCallable: DB driver loading starts");
-//			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection(URL, "root", "");
 			log.info("DBCallable: DB driver loaded");
 			
@@ -52,13 +51,10 @@ public class DBCallable implements Callable<DictionaryObject>{
 	}
 	
 	/**
-	 * Возвращающий метод - <code>call</code> вызывает - метод <code>toDoSelector</code>, которому в качестве аргумента
-	 * передаёт ссылочную переменную типа - <code>EntryDic</code> полученную в консрукторе <code>DBServerHandler</code>.
-	 * <code>DBServerHandler</code> в свою очередь возвращает другой <code>EnryDic</code> для ответной передачи его
-	 * запросившему клиенту в объект <code>CSDialog</code>.
-	 * <p>
-	 * Предусмотрено логирование аварийного завершения выполнения операции в файл <code>"DBServerHandler_error_log.txt"</code>
-	 * <code>file</code> переменная.
+	 * Возвращающий метод call вызывает метод Selector которому в качестве аргумента
+	 * передаёт ссылочную переменную типа dictionaryObject полученную в консрукторе DBCallable.
+	 * DBCallable в свою очередь возвращает другой dictionaryObject для ответной передачи его
+	 * запросившему клиенту в объект ServerRunnable.
 	 * 
 	 * @return DictionaryObject from DB
 	 */
@@ -78,14 +74,10 @@ public class DBCallable implements Callable<DictionaryObject>{
 	}
 	
 	/**
-	 * Метод - селектор - получает параметром объект типа <code>EntryDic</code>, сохраняет его в своей локальной
-	 * переменной и проверяет чему равен переданный с объектом флаг операции(удалить - <code>DELETE</code> существующую
-	 * запись, 	найти - <code>SEARCH</code> определение по ключевому! слову,  добавить - <code>ADD</code> новую запись,
-	 * корректировать существующую запись - <code>REDUCT</code>), и вызывает соответствующие методы, передавая им в
-	 * параметры копию ссылки на полученный объект типа <code>EntryDic</code>.
-	 * <p>
-	 * Предусмотрено логирование аварийного завершения выполнения операции в файл <code>"DBServerHandler_error_log.txt"</code>
-	 * <code>file</code> переменная.
+	 * Метод - селектор - получает параметром объект типа dictionaryObject сохраняет его в своей локальной
+	 * переменной и проверяет чему равен переданный с объектом флаг операции(-1 = DELETE, 0 = SEARCH, 1 = Add,
+	 * 10 = Edit), и вызывает соответствующие методы, передавая им в
+	 * параметры копию ссылки на полученный объект типа dictionaryObject.
 	 * 
 	 * @param dictionaryObject
 	 * @return
@@ -128,43 +120,164 @@ public class DBCallable implements Callable<DictionaryObject>{
 				+"Flag - "+ dicOut.flag + " Word - " + dicOut.word + " Def - " + dicOut.definition);
 		return dicOut;
 	}
-
-
+	
+	/**
+	 * Edit Query
+	 * 
+	 * @param dicIn
+	 * @return
+	 */
 	private DictionaryObject edit(DictionaryObject dicIn) {
+		log.info("DBCallable : starts edit method");
 		DictionaryObject dicEdit;
-		return dicEdit;
+		String   tmpWord       = dicIn.word;
+		String   tmpDefinition = dicIn.definition;
+		
+		try {
+			editStatement.setString(1, tmpDefinition);
+			editStatement.setString(1, tmpWord);
+			editStatement.executeUpdate();
+			log.info("DBCallable: editStatement sent in edit method ");
+			
+			editStatement.close();
+			connection.close();
+			log.info("DBCallable: editStatement & connection closed in edit method");
+			
+			
+			dicEdit = new DictionaryObject("ok, edited", "ok, edited", 10);
+			return dicEdit;
+		} catch (SQLException e) {
+			log.error("DBCallable: SQL query or editStatement.close(); troubles\n" + e.getMessage());
+			return new DictionaryObject("error editing", "error editing", 10);
+		} finally {
+			try {
+				editStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				log.error("DBCallable: DB resources .close(); or connection.close(); troubles\n" + e.getMessage());
+			}
+		}
 	}
-
+	
+	/**
+	 * Add Query
+	 * 
+	 * @param dicIn
+	 * @return
+	 */
 	private DictionaryObject add(DictionaryObject dicIn) {
+		log.info("DBCallable : starts add method");
 		DictionaryObject dicAdd;
-		return dicAdd;
+		String   tmpWord       = dicIn.word;
+		String   tmpDefinition = dicIn.definition;
+		
+		try {
+			addStatement.setString(1, tmpWord);
+			addStatement.setString(2, tmpDefinition);
+			addStatement.executeUpdate();
+			log.info("DBCallable: addStatement sent in add method ");
+			
+//			dicAdd = new DictionaryObject("ok, " + tmpWord + " added und ", tmpDefinition + "added, flag is ", 1);
+			dicAdd = new DictionaryObject("ok, added", "ok, added ", 1);
+			
+			addStatement.close();
+			connection.close();
+			log.info("DBCallable: addStatement & connection closed in add method");
+			
+			return dicAdd;
+		} catch (SQLException e) {
+			log.error("DBCallable: SQL query or addStatement.close(); troubles\n" + e.getMessage());
+			return new DictionaryObject("error adding", "error adding", 1);
+		} finally {
+			try {
+				addStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				log.error("DBCallable: DB resources .close(); or connection.close(); troubles\n" + e.getMessage());
+			}
+		}
 	}
-
+	
+	/**
+	 * Search Query
+	 * 
+	 * @param dicIn
+	 * @return
+	 */
 	private DictionaryObject search(DictionaryObject dicIn) {
-		DictionaryObject dicSearch;
-		return dicSearch;
+		log.info("DBCallable : starts search method");
+		String tmpWord = dicIn.word;
+		DictionaryObject dicSearch = new DictionaryObject("0", "0", 0);
+		String tmpDefinitionBack;
+		try {
+			searchStatement.setString(1, tmpWord);
+			log.info("DBCallable: searchStatement in search method");
+			
+			ResultSet resultSearch = searchStatement.executeQuery();
+			resultSearch.next();
+			tmpDefinitionBack = resultSearch.getString("beschreibung");
+			
+			log.debug("DBCallable: resultSearch received in search method tmpDefinitionBack - " + tmpDefinitionBack);
+			
+			resultSearch.close();
+			searchStatement.close();
+			
+			log.info("DBCallable : resultSearch & searchStatement were closed in search method");
+			
+			dicSearch.flag = 0;
+			dicSearch.word = tmpWord;
+			dicSearch.definition = tmpDefinitionBack;
+			log.info("DBCallable: definition from DB " + tmpDefinitionBack + " returning from method search to method selector in DBCallable");
+			
+			return dicSearch;
+		} catch (SQLException e) {
+			log.error("DBCallable: SQL query or searchStatement.close(); troubles\n" + e.getMessage());
+			return new DictionaryObject("error searching", "error searching", 0);
+		} finally {
+			try {
+				searchStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				log.error("DBCallable: DB resources .close(); or connection.close(); troubles\n" + e.getMessage());
+			}
+		}
 	}
 
 	/**
-	 * SQL запрос к таблице <code>"word_define"</code> в базе данных с именем - <code>"dictionary"</code>, в случае
-	 * удачного удаления, выполняется код в фигурных скобках в которых происходит <code>return </code>преобразованного
-	 * <code>EntryDic</code> в котором флаг операции <code>flag</code> не изменяется, а в полях <code>word </code>и
-	 * <code>definition</code> пишется "ок " - подтверждение удачного выполнения удаления, в случае если удаление не
-	 * произошло то выполнение из круглых скобок не попадает в фигурные, а падает в (<code>SQLException</code>)
-	 * ниже , в котором происходит формирование нового (<code>new EntryDic();</code>)в котором флаг операции
-	 * не меняется, а в полях word и definition выводится - error.
-	 * <p>
-	 * Предусмотрено логирование аварийного завершения выполнения операции в файл <code>"DBServerHandler_error_log.txt"</code>
-	 * <code>file</code> переменная.
+	 * Delete Query
+	 * 
 	 * @param dicIn
 	 * @return
 	 */
 	private DictionaryObject delete(DictionaryObject dicIn) {
 		log.debug("DBCallable : starts delete method");
 		DictionaryObject dicDelete;
-
-		return dicDelete;
+		String tmpWord = dicIn.word;
+		try {
+			deleteStatement.setString(1, tmpWord);
+			deleteStatement.executeUpdate();
+			
+			log.info("DBCallable: deleteStatement send in delete method");
+			deleteStatement.close();
+			connection.close();
+			
+			log.info("DBCallable: deleteStatement & connection closed in delete method");
+			dicDelete = new DictionaryObject("ok, deleted", "ok, deleted", -1);
+			
+			log.debug("DBCallable: DictionaryObject reply from DBCallable after delete method received = " +
+					dicDelete.flag + " "+ dicDelete.word + " " + dicDelete.definition);
+			
+			return dicDelete;
+		} catch (SQLException e) {
+			log.error("DBCallable: SQL query or deleteStatement.close(); troubles\n" + e.getMessage());
+			return new DictionaryObject("error deleting", "error deleting", -1);
+		} finally {
+			try {
+				deleteStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				log.error("DBCallable: DB resources .close(); or connection.close(); troubles\n" + e.getMessage());
+			}
+		}
 	}
-
-
 }

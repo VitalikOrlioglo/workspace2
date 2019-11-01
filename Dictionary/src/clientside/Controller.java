@@ -55,26 +55,13 @@ public class Controller {
     
     /**
      * Обработчик события по нажатию кнопки searchWord.
-	 * создаётся новая ссылочная переменная типа DictionaryObject с именем dictionaryObject куда в
-	 * качестве одного из параметров передаётся слово textSearch, определение которому нужно найти в словаре.
-	 * 
-	 * Далее dictionaryObject  передаётся аргументом в конструктор Callable  объекта
-	 * ClientCallable , который в свою очередь создаётся в параллельной нити в пуле
-	 * <code>ExecutorService</code> с именем <code>executorService</code> и возвращает на выходе своего метода <code>call</code>
-	 * объект заявленный в <code>Future</code>  - <code>EntryDic</code> во временную переменную -
-	 * <code>ReplyFu</code>.
-	 * <p>
-	 * Далее из полученного в ответе объекта <code>ReplyFu</code> через его метод - <code>get()</code> получаем
-	 * <code>EntryDic</code> а из него через внутренние методы геттеры необходимое определение по заданному в поиске слову,
-	 * сохраняем его во временную переменную <code>replyDefine</code> типа <code>String</code> и назначаем её в объект
-	 * формы - <code>txtAreaSearch</code> методом <code>setText()</code> - выводим определение в ожидаемом поле формы.
 	 * 
      * @param event
      */
     @FXML
     void searchWord(ActionEvent event) {
+    	log.info("Controller: searchWord is pressed, start searching");
     	try {
-    		log.info("Controller: searchWord is pressed, start searching");
         	String searchDefByWord = textSearch.getText();
         	log.info("Controller: looking for definition of word - " + searchDefByWord);
         	DictionaryObject searchDictionaryObject = new DictionaryObject(searchDefByWord, "null", 0);
@@ -113,11 +100,34 @@ public class Controller {
     	textAreaSearch.clear();
     }
     
+    /**
+     * Обработчик события по нажатию кнопки addWordDef
+     * @param event
+     */
     @FXML
     void addWordDef(ActionEvent event) {
+    	log.info("Add Button is pressed");
+		try {
+			String addWord = textAddWord.getText();
+	    	String addDefinition = textAddDef.getText();
+	    	log.info("Controller: Controller send DictionaryObject to handle in ClientCallable class in executor service");
+	    	
+	    	Future<DictionaryObject> replyFuture = controllerExecutorService.submit(new ClientCallable(new DictionaryObject(addWord, addDefinition, 1)));
+			DictionaryObject reply = replyFuture.get();
+	    	String replyWord = reply.word;
+	    	String replyDefinition = reply.definition;
+	    	
+	    	textAddWord.setText(replyWord);
+	    	textAddDef.setText(replyDefinition);
+		} catch (InterruptedException e) {
+			log.error("Controller: controllerExecutorService.submit troubles \n" + e.getMessage());
+		} catch (ExecutionException e) {
+			log.error("Controller: replyFuture.get(); troubles \n" + e.getMessage());
+		}
+    	
     	
     }
-
+    
     @FXML
     void clearAdd(ActionEvent event) {
     	log.info("clearAdd");
@@ -125,9 +135,32 @@ public class Controller {
     	textAddDef.clear();
     }
     
+    /**
+     * Обработчик события по нажатию кнопки editWordDef
+	 * 
+     * @param event
+     */
     @FXML
     void editWordDef(ActionEvent event) {
-
+    	log.info("Edit Button is pressed");
+    	try {
+    		String editWord = textEditWord.getText();
+        	String editDefinition = textEditDef.getText();
+        	log.info("Controller: Controller send DictionaryObject to handle in ClientCallable class in executor service");
+			
+        	Future<DictionaryObject> replyFuture = controllerExecutorService.submit(new ClientCallable(new DictionaryObject(editWord, editDefinition, 10)));
+			
+			DictionaryObject reply = replyFuture.get();
+			String replyWord = reply.word;
+			String replyDefinition = reply.definition;
+			
+			textEditWord.setText(replyWord);
+			textEditDef.setText(replyDefinition);
+		} catch (InterruptedException e) {
+			log.error("Controller: controllerExecutorService.submit troubles \n" + e.getMessage());
+		} catch (ExecutionException e) {
+			log.error("Controller: replyFuture.get(); troubles \n" + e.getMessage());
+		}
     }
 
     @FXML
@@ -136,10 +169,30 @@ public class Controller {
     	textEditWord.clear();
     	textEditDef.clear();
     }
-
+    
+    /**
+     * Обработчик события по нажатию кнопки deleteWordDef
+	 * 
+     * @param event
+     */
     @FXML
     void deleteWordDef(ActionEvent event) {
-
+    	log.info("Delete Button is pressed");
+    	try {
+    		String delWord = textDeleteWordDef.getText();
+        	log.info("Controller: Controller send DictionaryObject to handle in ClientCallable class in executor service");
+			
+        	Future<DictionaryObject> replyFuture = controllerExecutorService.submit(new ClientCallable(new DictionaryObject(delWord, "none", -1)));
+			
+        	DictionaryObject reply = replyFuture.get();
+			String replyWord = reply.definition;
+			
+			textDeleteWordDef.setText(replyWord);
+    	} catch (InterruptedException e) {
+    		log.error("Controller: controllerExecutorService.submit troubles \n" + e.getMessage());
+		} catch (ExecutionException e) {
+			log.error("Controller: replyFuture.get(); troubles \n" + e.getMessage());
+		}
     }
 
     @FXML

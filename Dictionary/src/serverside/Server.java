@@ -23,16 +23,16 @@ public class Server {
 
 	/**
 	 * Поднимает сервер для работы с клентом на порту 1111  инициализирует обработчиков
-	 * чтения объектов <code>EntryDic</code> из канала и
-	 * передачи в канал(сокет) и ждёт обращения <code>accept();</code>accept();
-	 * после handShaking-а инициализирет объект EntryDic переданным от клиента в сокет объектом
-	 * <code>EntryDic</code> (методом ObjectInputStream), вызывает метод селектор выбора операции
+	 * чтения объектов DictionaryObject из канала и
+	 * передачи в канал(сокет) и ждёт обращения accept.
+	 * после handShaking-а инициализирет объект DictionaryObject переданным от клиента в сокет объектом
+	 * DictionaryObject (методом ObjectInputStream), вызывает метод селектор выбора операции
 	 * (удаление записи, поиск определения по слову, добавление записи, корректировка определения)
-	 * по флагу в самом объекте , результирующий EntryDic из пула нитей <code>exeDic</code> который запускает
-	 * <code>Runnable</code> объект <code>CSDialog</code> в котором и происходит всё общение формы с серввером,
-	 * <code>CSDialog</code> в свою очередь <code>Callable </code> объект - <code>DBServerHandler</code> - сервер
-	 * базы данных , который выполняет действия в базе и возвращает ответ из БД в <code>CSDialog</code> в виде
-	 * <code>EntryDic</code> в сокет методом (<code>ObjectOutputStream</code>-а - <code>writeObject();</code>)
+	 * по флагу в самом объекте , результирующий DictionaryObject из пула потоков который запускает
+	 * Runnable объект ServerRunnable в котором и происходит всё общение формы с серввером,
+	 * ServerRunnable в свою очередь Callable объект - DBCallable - сервер
+	 * базы данных , который выполняет действия в базе и возвращает ответ из БД в ServerRunnable в виде
+	 * DictionaryObject в сокет методом ObjectOutputStream-а - writeObject.
 	 * клиент принимает на своей стороне объект , расшифровывает записи в нём и отображает результат
 	 * в GUI.
 	 * @param args
@@ -59,7 +59,6 @@ public class Server {
 			}
 			// закрываем пулл потоков
 			serverExecutorService.shutdown();
-			
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		} finally {

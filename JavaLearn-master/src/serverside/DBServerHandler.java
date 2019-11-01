@@ -391,7 +391,7 @@ public class DBServerHandler implements Callable<EntryDic>{
 			
 			pSReduct.close();
 			connection.close();
-			System.out.println("DBServerHandler : resources closed in reductEntry method in DBServerHandler closed");
+			System.out.println("DBServerHandler : resources closed in redu ctEntry method in DBServerHandler closed");
 			
 			entryDicReduct = new EntryDic(10, "ok , reducted", "ok , reducted");
 			return entryDicReduct;
